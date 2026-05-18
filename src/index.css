@@ -14,11 +14,11 @@
   --abyss: #060612;
   --deep: #0a0a1c;
   --dim: #0f1225;
-  --glow-blue: #1a6fff;
-  --glow-cyan: #00d4ff;
+  --glow-blue: #0066ff;
+  --glow-cyan: #00eeff;
   --glow-soft: #4db8ff;
   --glow-amber: #ffb347;
-  --glow-rose: #ff6b9d;
+  --glow-rose: #ff0055;
   --text-primary: rgba(220, 230, 255, 0.92);
   --text-secondary: rgba(160, 180, 220, 0.65);
   --text-ghost: rgba(100, 130, 180, 0.35);
@@ -79,7 +79,7 @@ body {
   inset: 0;
   z-index: 9990;
   pointer-events: none;
-  opacity: 0.035;
+  opacity: 0.06;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 128px 128px;
