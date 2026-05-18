@@ -15,7 +15,7 @@ const timeline = [
     icon: '↓',
     color: 'rgba(167,139,250,0.5)',
     text: 'He fell the way most people fall — gradually, then all at once. He noticed everything. Her silences. Her laughter. The way she said goodbye like she might mean it permanently.',
-    detail: 'He cared not loudly, but in the quiet consuming way that slowly becomes part of someones soul.
+    detail: 'He cared not loudly, but in the quiet consuming way that slowly becomes part of someones soul
   },
   {
     phase: 'the confession',
