@@ -10,7 +10,7 @@ const conversations = [
     color: '#ff6b9d',
     messages: [
       { from: 'them', text: 'I think we should talk.', time: '11:43 PM', read: false },
-      { from: 'me', text: 'About what? I've been waiting.', time: '11:44 PM', read: false },
+      { from: 'me', text: "About what? I've been waiting.", time: '11:44 PM', read: false },
       { from: 'them', text: 'About us. About everything.', time: '11:44 PM', read: false },
       { from: 'me', text: 'I'm sorry. For all of it.', time: '11:48 PM', read: false },
     ]
