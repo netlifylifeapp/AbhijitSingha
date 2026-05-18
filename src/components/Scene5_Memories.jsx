@@ -8,7 +8,7 @@ const fragments = [
   { text: '3am conversations', x: 30, y: 38, rot: -3, opacity: 0.6, size: 'md' },
   { text: 'that one evening near the chai stall', x: 70, y: 30, rot: 6, opacity: 0.4, size: 'sm' },
   { text: 'the screenshot he never deleted', x: 8, y: 58, rot: -8, opacity: 0.5, size: 'xs' },
-  { text: 'how she'd text first sometimes', x: 50, y: 55, rot: 2, opacity: 0.65, size: 'md' },
+  { text: 'how she had text first sometimes', x: 50, y: 55, rot: 2, opacity: 0.65, size: 'md' },
   { text: 'rain and her voice on call', x: 78, y: 62, rot: -4, opacity: 0.38, size: 'sm' },
   { text: 'a birthday wish he read 40 times', x: 20, y: 78, rot: 5, opacity: 0.5, size: 'xs' },
   { text: 'the silence after the rejection', x: 55, y: 78, rot: -2, opacity: 0.7, size: 'md' },
