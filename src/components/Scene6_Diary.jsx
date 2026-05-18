@@ -6,27 +6,27 @@ import { useTypewriter } from '../hooks/useTypewriter'
 const diaryEntries = [
   {
     date: 'October 12 — late night',
-    entry: `I keep replaying that conversation in my head. The one where I said too much, or maybe not enough. I don't know which is worse. I told myself I wouldn't care this much. I'm still caring.`,
+    entry: `I keep replaying that conversation in my head. The one where I said too much, or maybe not enough. I do not know which is worse. I told myself I would not care this much. I am still caring.`,
     mood: 'restless'
   },
   {
     date: 'November 3 — 2:17 AM',
-    entry: `She went quiet today. Not the comfortable kind of quiet. The kind that tells you something has shifted and you can't ask why without making it worse. So I said nothing too. Two silences across a screen.`,
+    entry: `She went quiet today. Not the comfortable kind of quiet. The kind that tells you something has shifted and you cannot ask why without making it worse. So I said nothing too. Two silences across a screen.`,
     mood: 'hollow'
   },
   {
     date: 'December 28 — after midnight',
-    entry: `I know I became too much. I could feel myself getting too much. I just didn't know how to stop. Every time I tried to be less, it felt like disappearing. Maybe disappearing was what she needed from me.`,
+    entry: `I know I became too much. I could feel myself getting too much. I just did not know how to stop. Every time I tried to be less, it felt like disappearing. Maybe disappearing was what she needed from me.`,
     mood: 'regret'
   },
   {
     date: 'February 14 — alone',
-    entry: `The worst part is not loving someone who doesn't love you back. The worst part is knowing you were the reason their warmth toward you slowly turned to distance. I did that. I became that to her.`,
+    entry: `The worst part is not loving someone who does not love you back. The worst part is knowing you were the reason their warmth toward you slowly turned to distance. I did that. I became that to her.`,
     mood: 'broken'
   },
   {
     date: 'April 7 — 4am again',
-    entry: `I don't blame her. I want to, because it would be easier. But I know what I did. I know how many times I chose my own insecurity over her comfort. I am the villain in her story. That's the part that stays.`,
+    entry: `I do not blame her. I want to, because it would be easier. But I know what I did. I know how many times I chose my own insecurity over her comfort. I am the villain in her story. That's the part that stays.`,
     mood: 'honest'
   }
 ]

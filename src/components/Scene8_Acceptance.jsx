@@ -213,7 +213,7 @@ export default function Scene8_Acceptance() {
             end of transmission
           </p>
           <p className="font-serif text-sm text-[rgba(120,150,200,0.3)] italic mt-3">
-            "some stories don't have endings.<br />they just go quiet."
+            "some stories do not have endings.<br />they just go quiet."
           </p>
         </motion.div>
 

@@ -15,27 +15,27 @@ const timeline = [
     icon: '↓',
     color: 'rgba(167,139,250,0.5)',
     text: 'He fell the way most people fall — gradually, then all at once. He noticed everything. Her silences. Her laughter. The way she said goodbye like she might mean it permanently.',
-    detail: 'He cared not loudly, but in the quiet consuming way that slowly becomes part of someone's soul.'
+    detail: 'He cared not loudly, but in the quiet consuming way that slowly becomes part of someones soul.
   },
   {
     phase: 'the confession',
     icon: '◌',
     color: 'rgba(255,179,71,0.5)',
-    text: 'He told her how he felt. She was honest with him. She didn't feel the same way. He said he understood. He didn't. He just said it because the alternative was worse.',
+    text: 'He told her how he felt. She was honest with him. She did not feel the same way. He said he understood. He did not. He just said it because the alternative was worse.',
     detail: 'Rejection is not the end. Sometimes it is the beginning of a slower heartbreak.'
   },
   {
     phase: 'the unraveling',
     icon: '⌗',
     color: 'rgba(255,107,157,0.5)',
-    text: 'Even after rejection, his feelings didn't disappear. They just became quieter. Heavier. He started noticing things he shouldn't have — who she talked to, who she laughed with.',
+    text: 'Even after rejection, his feelings did not disappear. They just became quieter. Heavier. He started noticing things he should not have — who she talked to, who she laughed with.',
     detail: 'Not because he wanted control. But because he was drowning inside his own thoughts with no way out.'
   },
   {
     phase: 'the damage',
     icon: '×',
     color: 'rgba(255,80,80,0.4)',
-    text: 'Some people break hearts through hatred. He broke hers through trying too hard to hold on. Slowly, the warmth she'd shown him turned to distance. He watched it happen and couldn't stop it.',
+    text: 'Some people break hearts through hatred. He broke hers through trying too hard to hold on. Slowly, the warmth she had shown him turned to distance. He watched it happen and could not stop it.',
     detail: '"I cared too much. And in doing so, I gave her a reason to care less." — what he never said aloud.'
   },
   {
