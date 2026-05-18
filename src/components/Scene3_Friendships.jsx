@@ -3,11 +3,11 @@ import { motion } from 'framer-motion'
 import { useInView } from '../hooks/useInView'
 
 const friends = [
-  { name: 'Arjun', fade: 0.95, lastContact: '3 years ago', note: 'we said "let\'s meet soon" in 2021.' },
-  { name: 'Mehul', fade: 0.85, lastContact: '2 years ago', note: 'best friend for 6 years. now a stranger.' },
-  { name: 'Sneha', fade: 0.7, lastContact: '18 months ago', note: 'she moved cities. we never called.' },
-  { name: 'Rohan', fade: 0.5, lastContact: '8 months ago', note: 'he got busy. life happened.' },
-  { name: 'Tanvi', fade: 0.3, lastContact: '4 months ago', note: 'still in the city. still drifting.' },
+  { name: 'Sadia', fade: 0.95, lastContact: '3 years ago', note: 'we said "let\'s meet soon" in 2021.' },
+  { name: 'James', fade: 0.85, lastContact: '2 years ago', note: 'best friend for 6 years. now a stranger.' },
+  { name: 'Doren', fade: 0.7, lastContact: '18 months ago', note: 'she moved cities. we never called.' },
+  { name: 'Deba', fade: 0.5, lastContact: '8 months ago', note: 'he got busy. life happened.' },
+  { name: 'Mani', fade: 0.3, lastContact: '4 months ago', note: 'still in the city. still drifting.' },
   { name: 'Dev', fade: 0.12, lastContact: 'last week', note: 'maybe the last one who still checks in.' },
 ]
 
