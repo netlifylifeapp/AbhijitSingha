@@ -16,9 +16,9 @@ const conversations = [
     ]
   },
   {
-    name: 'Rohan',
+    name: 'James',
     lastSeen: '8 months ago',
-    avatar: 'R',
+    avatar: 'J',
     color: '#4db8ff',
     messages: [
       { from: 'me', text: 'bhai tu kahan hai aajkal', time: '9:12 PM', read: true },
