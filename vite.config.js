@@ -1,23 +1,30 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
   build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
+    target: 'es2020',
+    chunkSizeWarningLimit: 600,
+    minify: 'esbuild',
+    sourcemap: false,
     rollupOptions: {
       output: {
-        manualChunks: {
-          three: ['three'],
-          'react-three': ['@react-three/fiber', '@react-three/drei'],
-          framer: ['framer-motion'],
-          gsap: ['gsap']
-        }
-      }
-    }
+        manualChunks(id) {
+          if (id.includes('node_modules/three')) return 'vendor-three'
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) return 'vendor-react'
+          if (id.includes('node_modules/framer-motion') || id.includes('node_modules/lenis')) return 'vendor-motion'
+        },
+      },
+    },
   },
   optimizeDeps: {
-    include: ['three', '@react-three/fiber', '@react-three/drei', 'gsap', 'framer-motion']
-  }
+    include: ['react', 'react-dom', 'framer-motion', 'gsap', 'three', 'lenis'],
+  },
 })

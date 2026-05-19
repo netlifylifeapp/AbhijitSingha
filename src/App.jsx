@@ -1,4 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import Lenis from 'lenis'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import PasswordGate from './components/PasswordGate'
 import LoadingScreen from './components/LoadingScreen'
 import RainBackground from './components/RainBackground'
@@ -17,16 +20,42 @@ import Scene7_Love from './components/Scene7_Love'
 import Scene8_Acceptance from './components/Scene8_Acceptance'
 import { motion } from 'framer-motion'
 
+gsap.registerPlugin(ScrollTrigger)
+
 export default function App() {
   const [unlocked, setUnlocked] = useState(false)
-  const [loaded, setLoaded] = useState(false)
+  const [loaded, setLoaded]     = useState(false)
+
+  // ── Lenis smooth scroll ──────────────────────────────────────────────────
+  useEffect(() => {
+    if (!unlocked) return
+
+    const lenis = new Lenis({
+      duration:        1.8,
+      easing:          (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel:     true,
+      wheelMultiplier: 0.85,
+      touchMultiplier: 2,
+    })
+
+    function onTick(time) { lenis.raf(time * 1000) }
+
+    lenis.on('scroll', ScrollTrigger.update)
+    gsap.ticker.add(onTick)
+    gsap.ticker.lagSmoothing(0)
+
+    return () => {
+      lenis.destroy()
+      gsap.ticker.remove(onTick)
+    }
+  }, [unlocked])
 
   if (!unlocked) {
     return <PasswordGate onUnlock={() => setUnlocked(true)} />
   }
 
   return (
-    <div className="relative" style={{ background: '#f2ebe0' }}>
+    <div className="relative" style={{ background: '#000000' }}>
       <RainBackground intensity={1} />
       <div className="grain-overlay" />
       <div className="scanlines" />
