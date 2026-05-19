@@ -1,0 +1,202 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Variables ──────────────────────────────────────────────────────── */
+:root {
+  --void:    #020408;
+  --abyss:   #040d1a;
+  --deep:    #071428;
+  --neon:    #1a6bff;
+  --ghost:   #4a7ab5;
+  --mist:    #8badd4;
+  --soul:    #c8a8e0;
+  --ember:   #ff6b6b;
+  --rain:    #b8d4f0;
+
+  /* Cinematic easing curves */
+  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inertia:   cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ─── Base Reset ─────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--void);
+  color: var(--mist);
+  font-family: 'DM Sans', sans-serif;
+  /* Smooth scroll handled by Lenis JS */
+}
+
+body {
+  overflow-x: hidden;
+  background: var(--void);
+}
+
+/* Hide native cursor only on devices with a precise pointer (mouse/trackpad) */
+@media (pointer: fine) {
+  body { cursor: none; }
+  a, button, [data-cursor] { cursor: none; }
+}
+
+/* ─── Custom Cursor ──────────────────────────────────────────────────────── */
+.cursor-dot {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: var(--neon);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, background 0.2s;
+  mix-blend-mode: screen;
+}
+
+.cursor-ring {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(26, 107, 255, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: all 0.15s var(--ease-inertia);
+  mix-blend-mode: screen;
+}
+
+/* ─── Grain Overlay ──────────────────────────────────────────────────────── */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  animation: grain-shift 0.5s steps(1) infinite;
+}
+
+@keyframes grain-shift {
+  0%   { background-position: 0 0; }
+  25%  { background-position: -15px 10px; }
+  50%  { background-position: 10px -20px; }
+  75%  { background-position: -25px 15px; }
+  100% { background-position: 5px -10px; }
+}
+
+/* ─── VHS Scanline Effect ────────────────────────────────────────────────── */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: 9996;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+}
+
+/* ─── Glass Card ─────────────────────────────────────────────────────────── */
+.glass {
+  background: rgba(7, 20, 40, 0.6);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid rgba(74, 122, 181, 0.12);
+}
+
+/* ─── Text Utilities ─────────────────────────────────────────────────────── */
+.text-glow-blue {
+  text-shadow: 0 0 20px rgba(26, 107, 255, 0.5), 0 0 60px rgba(26, 107, 255, 0.2);
+}
+
+.text-glow-soul {
+  text-shadow: 0 0 20px rgba(200, 168, 224, 0.5);
+}
+
+/* ─── Glitch Text Effect ─────────────────────────────────────────────────── */
+.glitch-text {
+  position: relative;
+}
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+}
+.glitch-text::before {
+  color: var(--soul);
+  animation: glitch-before 3s infinite linear alternate-reverse;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+.glitch-text::after {
+  color: var(--neon);
+  animation: glitch-after 2s infinite linear alternate-reverse;
+  clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+}
+
+@keyframes glitch-before {
+  0%   { transform: translate(0); }
+  20%  { transform: translate(-2px, 1px); }
+  40%  { transform: translate(1px, -1px); }
+  60%  { transform: translate(-1px, 2px); }
+  80%  { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+@keyframes glitch-after {
+  0%   { transform: translate(0); }
+  20%  { transform: translate(2px, -1px); }
+  40%  { transform: translate(-1px, 1px); }
+  60%  { transform: translate(1px, -2px); }
+  80%  { transform: translate(-2px, 2px); }
+  100% { transform: translate(0); }
+}
+
+/* ─── Section Base ───────────────────────────────────────────────────────── */
+.scene-section {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ─── Emotional Quote ────────────────────────────────────────────────────── */
+.emotional-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+
+/* ─── Chat Bubble UI ─────────────────────────────────────────────────────── */
+.chat-bubble-sent {
+  background: rgba(26, 107, 255, 0.15);
+  border: 1px solid rgba(26, 107, 255, 0.2);
+  border-radius: 18px 18px 4px 18px;
+}
+.chat-bubble-recv {
+  background: rgba(30, 45, 64, 0.8);
+  border: 1px solid rgba(74, 122, 181, 0.1);
+  border-radius: 18px 18px 18px 4px;
+}
+
+/* ─── Scrollbar Hidden ───────────────────────────────────────────────────── */
+html, body { scrollbar-width: none; }
+::-webkit-scrollbar { display: none; }
+
+/* ─── Selection Color ────────────────────────────────────────────────────── */
+::selection {
+  background: rgba(200, 168, 224, 0.2);
+  color: var(--soul);
+}

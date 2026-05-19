@@ -1,63 +1,168 @@
-import { useState } from 'react'
-import PasswordGate from './components/PasswordGate'
-import LoadingScreen from './components/LoadingScreen'
-import RainBackground from './components/RainBackground'
-import Cursor from './components/Cursor'
-import AudioController from './components/AudioController'
-import NavDots from './components/NavDots'
-import ScrollProgress from './components/ScrollProgress'
-import SceneDivider from './components/SceneDivider'
-import Scene1_Intro from './components/Scene1_Intro'
-import Scene2_Messages from './components/Scene2_Messages'
-import Scene3_Friendships from './components/Scene3_Friendships'
-import Scene4_Family from './components/Scene4_Family'
-import Scene5_Memories from './components/Scene5_Memories'
-import Scene6_Diary from './components/Scene6_Diary'
-import Scene7_Love from './components/Scene7_Love'
-import Scene8_Acceptance from './components/Scene8_Acceptance'
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
+// ── Hooks ─────────────────────────────────────────────────────────────────────
+import { useCursor }       from './hooks/useCursor'
+import { useSmoothScroll } from './hooks/useSmoothScroll'
+
+// ── Canvas ────────────────────────────────────────────────────────────────────
+import RainCanvas from './components/canvas/RainCanvas'
+
+// ── Scenes (lazy loaded for performance) ─────────────────────────────────────
+import SceneIntro   from './components/scenes/SceneIntro'
+import SceneFriends from './components/scenes/SceneFriends'
+import SceneMessages from './components/scenes/SceneMessages'
+import SceneLove    from './components/scenes/SceneLove'
+import SceneFamily  from './components/scenes/SceneFamily'
+import SceneDiary   from './components/scenes/SceneDiary'
+import SceneEnding  from './components/scenes/SceneEnding'
+
+// ── UI Components ─────────────────────────────────────────────────────────────
+import LoadingScreen      from './components/ui/LoadingScreen'
+import SceneNavigator     from './components/ui/SceneNavigator'
+import GhostNotifications from './components/effects/GhostNotifications'
+
+// ─── App ──────────────────────────────────────────────────────────────────────
 export default function App() {
-  const [unlocked, setUnlocked] = useState(false)
-  const [loaded, setLoaded] = useState(false)
+  const [loading, setLoading]         = useState(true)
+  const [currentScene, setCurrentScene] = useState('intro')
 
-  if (!unlocked) {
-    return <PasswordGate onUnlock={() => setUnlocked(true)} />
-  }
+  // ── Custom cursor ──────────────────────────────────────────────────────────
+  const { dotRef, ringRef } = useCursor()
+
+  // ── Lenis smooth scroll + GSAP sync ───────────────────────────────────────
+  useSmoothScroll()
+
+  // ── Track current scene via Intersection Observer ─────────────────────────
+  useEffect(() => {
+    if (loading) return
+
+    const scenes = document.querySelectorAll('[data-scene]')
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setCurrentScene(entry.target.dataset.scene)
+          }
+        })
+      },
+      { threshold: 0.4 }
+    )
+
+    scenes.forEach(el => observer.observe(el))
+    return () => observer.disconnect()
+  }, [loading])
 
   return (
-    <div className="relative" style={{ background: '#f2ebe0' }}>
-      <RainBackground intensity={1} />
-      <div className="grain-overlay" />
-      <div className="scanlines" />
-      <div className="vignette" />
-      <Cursor />
-      <AudioController />
-      <ScrollProgress />
-      <LoadingScreen onComplete={() => setLoaded(true)} />
-      {loaded && <NavDots />}
-      <motion.main
-        initial={{ opacity: 0 }}
-        animate={loaded ? { opacity: 1 } : {}}
-        transition={{ duration: 1.5 }}
-      >
-        <div id="s1"><Scene1_Intro /></div>
-        <SceneDivider number="02" label="unread conversations" />
-        <div id="s2"><Scene2_Messages /></div>
-        <SceneDivider number="03" label="fading friendships" />
-        <div id="s3"><Scene3_Friendships /></div>
-        <SceneDivider number="04" label="emotional distance" />
-        <div id="s4"><Scene4_Family /></div>
-        <SceneDivider number="05" label="collapsing memories" />
-        <div id="s5"><Scene5_Memories /></div>
-        <SceneDivider number="06" label="abandoned diary" />
-        <div id="s6"><Scene6_Diary /></div>
-        <SceneDivider number="07" label="the story that stayed" />
-        <div id="s7"><Scene7_Love /></div>
-        <SceneDivider number="08" label="silent acceptance" />
-        <div id="s8"><Scene8_Acceptance /></div>
-        <div className="h-16" />
-      </motion.main>
+    <>
+      {/* ── Loading screen ─────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {loading && (
+          <LoadingScreen onComplete={() => setLoading(false)} />
+        )}
+      </AnimatePresence>
+
+      {/* ── Main experience ────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {!loading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {/* ── Custom cursor ─────────────────────────────────────────── */}
+            <div ref={dotRef}  className="cursor-dot"  aria-hidden />
+            <div ref={ringRef} className="cursor-ring" aria-hidden />
+
+            {/* ── Film grain + scanlines ────────────────────────────────── */}
+            <div className="grain-overlay" aria-hidden />
+            <div className="scanlines"     aria-hidden />
+
+            {/* ── Three.js rain canvas (fixed, behind content) ──────────── */}
+            <RainCanvas />
+
+            {/* ── Ghost notifications ────────────────────────────────────── */}
+            <GhostNotifications />
+
+            {/* ── Scene navigation dots ─────────────────────────────────── */}
+            <div className="hidden md:block">
+              <SceneNavigator currentScene={currentScene} />
+            </div>
+
+            {/* ── Scene divider line (top of page) ──────────────────────── */}
+            <div
+              className="fixed top-0 left-0 right-0 h-px z-40"
+              style={{ background: 'linear-gradient(to right, transparent, rgba(74,122,181,0.15), transparent)' }}
+            />
+
+            {/* ── All scenes ────────────────────────────────────────────── */}
+            <main>
+              <div data-scene="intro">
+                <SceneIntro />
+              </div>
+
+              {/* Cinematic scene divider */}
+              <SceneDivider />
+
+              <div data-scene="friends">
+                <SceneFriends />
+              </div>
+
+              <SceneDivider />
+
+              <div data-scene="messages">
+                <SceneMessages />
+              </div>
+
+              <SceneDivider />
+
+              <div data-scene="love">
+                <SceneLove />
+              </div>
+
+              <SceneDivider />
+
+              <div data-scene="family">
+                <SceneFamily />
+              </div>
+
+              <SceneDivider />
+
+              <div data-scene="diary">
+                <SceneDiary />
+              </div>
+
+              <SceneDivider />
+
+              <div data-scene="ending">
+                <SceneEnding />
+              </div>
+            </main>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  )
+}
+
+// ─── Scene Divider ────────────────────────────────────────────────────────────
+// Cinematic separator between scenes — subtle atmospheric break
+
+function SceneDivider() {
+  return (
+    <div className="relative py-8 flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 flex items-center">
+        <div
+          className="w-full h-px"
+          style={{
+            background: 'linear-gradient(to right, transparent 0%, rgba(74,122,181,0.08) 30%, rgba(74,122,181,0.12) 50%, rgba(74,122,181,0.08) 70%, transparent 100%)',
+          }}
+        />
+      </div>
+      <div
+        className="relative w-1 h-1 rounded-full bg-ghost"
+        style={{ opacity: 0.2, boxShadow: '0 0 8px rgba(74,122,181,0.4)' }}
+      />
     </div>
   )
 }
