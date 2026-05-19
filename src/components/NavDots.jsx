@@ -17,51 +17,37 @@ export default function NavDots() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = scenes.map(s => document.getElementById(s.id))
       const scrollY = window.scrollY + window.innerHeight / 2
-
-      sections.forEach((section, i) => {
+      scenes.forEach((s, i) => {
+        const section = document.getElementById(s.id)
         if (!section) return
-        const top = section.offsetTop
-        const bottom = top + section.offsetHeight
-        if (scrollY >= top && scrollY < bottom) {
+        if (scrollY >= section.offsetTop && scrollY < section.offsetTop + section.offsetHeight) {
           setActive(i)
         }
       })
     }
-
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const scrollTo = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-  }
+  const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
 
   return (
-    <div className="fixed left-5 top-1/2 -translate-y-1/2 z-[9980] flex flex-col gap-4 hidden md:flex">
+    <div className="fixed left-5 top-1/2 -translate-y-1/2 z-[9980] flex-col gap-4 hidden md:flex">
       {scenes.map((scene, i) => (
-        <button
-          key={scene.id}
-          onClick={() => scrollTo(scene.id)}
-          className="group flex items-center gap-3"
-          title={scene.label}
-        >
+        <button key={scene.id} onClick={() => scrollTo(scene.id)} className="group flex items-center gap-3">
           <div className="relative flex items-center justify-center w-3 h-3">
             <motion.div
-              animate={{
-                scale: active === i ? 1.4 : 1,
-                opacity: active === i ? 1 : 0.35,
-              }}
+              animate={{ scale: active === i ? 1.4 : 1, opacity: active === i ? 1 : 0.35 }}
               transition={{ duration: 0.3 }}
               className="w-1.5 h-1.5 rounded-full"
               style={{
-                background: active === i ? 'rgba(0,212,255,0.9)' : 'rgba(100,140,200,0.4)',
-                boxShadow: active === i ? '0 0 8px rgba(0,212,255,0.6)' : 'none'
+                background: active === i ? 'rgba(139,26,26,0.8)' : 'rgba(138,106,0,0.4)',
+                boxShadow: active === i ? '0 0 8px rgba(139,26,26,0.4)' : 'none'
               }}
             />
           </div>
-          <span className="font-mono text-[7px] tracking-wider text-[rgba(80,110,160,0.35)] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <span className="font-mono text-[7px] tracking-wider uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-200" style={{ color: 'rgba(100,60,30,0.5)' }}>
             {scene.label}
           </span>
         </button>

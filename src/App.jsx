@@ -5,6 +5,7 @@ import RainBackground from './components/RainBackground'
 import Cursor from './components/Cursor'
 import AudioController from './components/AudioController'
 import NavDots from './components/NavDots'
+import ScrollProgress from './components/ScrollProgress'
 import SceneDivider from './components/SceneDivider'
 import Scene1_Intro from './components/Scene1_Intro'
 import Scene2_Messages from './components/Scene2_Messages'
@@ -32,9 +33,14 @@ export default function App() {
       <div className="vignette" />
       <Cursor />
       <AudioController />
+      <ScrollProgress />
       <LoadingScreen onComplete={() => setLoaded(true)} />
       {loaded && <NavDots />}
-      <motion.main initial={{ opacity: 0 }} animate={loaded ? { opacity: 1 } : {}} transition={{ duration: 1.5 }}>
+      <motion.main
+        initial={{ opacity: 0 }}
+        animate={loaded ? { opacity: 1 } : {}}
+        transition={{ duration: 1.5 }}
+      >
         <div id="s1"><Scene1_Intro /></div>
         <SceneDivider number="02" label="unread conversations" />
         <div id="s2"><Scene2_Messages /></div>
