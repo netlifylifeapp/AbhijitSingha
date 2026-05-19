@@ -10,8 +10,8 @@
 }
 
 :root {
-  --void: #06020e;
-  --abyss: #06020e;
+  --void: #f5f0e8;
+  --abyss: #f5f0e8;
   --deep: #0a040e;
   --dim: #0f1225;
   --glow-blue: #0066ff;
@@ -31,7 +31,7 @@ html {
 }
 
 body {
-  background: #06020e;
+  background: #f5f0e8;
   color: var(--text-primary);
   font-family: 'DM Sans', sans-serif;
   font-weight: 300;
@@ -119,7 +119,7 @@ body {
   width: 3px;
 }
 ::-webkit-scrollbar-track {
-  background: #06020e;
+  background: #f5f0e8;
 }
 ::-webkit-scrollbar-thumb {
   background: rgba(192,57,43, 0.3);
