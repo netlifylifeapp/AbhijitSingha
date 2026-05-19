@@ -1,38 +1,11 @@
-# ─── Netlify Build Configuration ─────────────────────────────────────────────
-# Abhijit Singha — A Quiet Existence
-
 [build]
-  # Command Netlify runs to build the project
   command = "npm run build"
-
-  # Directory Vite outputs to
   publish = "dist"
 
-  # Node version — must match engines field in package.json
-  environment = { NODE_VERSION = "20" }
-
-# ─── SPA Routing ──────────────────────────────────────────────────────────────
-# Without this, refreshing any non-root path returns a 404.
-# This rewrites all routes back to index.html so React handles routing.
 [[redirects]]
-  from   = "/*"
-  to     = "/index.html"
+  from = "/*"
+  to = "/index.html"
   status = 200
 
-# ─── Security & Performance Headers ──────────────────────────────────────────
-[[headers]]
-  for = "/*"
-  [headers.values]
-    # Prevent clickjacking
-    X-Frame-Options = "DENY"
-    # Prevent MIME sniffing
-    X-Content-Type-Options = "nosniff"
-    # Enable referrer for analytics
-    Referrer-Policy = "strict-origin-when-cross-origin"
-
-# ─── Long-term caching for hashed assets ─────────────────────────────────────
-# Vite adds content hashes to filenames — safe to cache for 1 year
-[[headers]]
-  for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+[build.environment]
+  NODE_VERSION = "18"
