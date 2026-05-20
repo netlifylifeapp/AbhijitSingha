@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from '../hooks/useInView'
+import gsap from 'gsap'
 
 const conversations = [
   {
     name: 'her',
     lastSeen: '2 years ago',
     avatar: 'S',
-    color: '#ff6b9d',
+    color: '#c42d42',
     messages: [
       { from: 'them', text: 'I think we should talk.', time: '11:43 PM', read: false },
       { from: 'me', text: "About what? I have been waiting.", time: '11:44 PM', read: false },
@@ -19,7 +20,7 @@ const conversations = [
     name: 'James',
     lastSeen: '8 months ago',
     avatar: 'J',
-    color: '#4db8ff',
+    color: '#4a7ab5',
     messages: [
       { from: 'me', text: 'bhai tu kahan hai aajkal', time: '9:12 PM', read: true },
       { from: 'me', text: 'ping me when you are free', time: '9:13 PM', read: false },
@@ -29,7 +30,7 @@ const conversations = [
     name: 'Priya',
     lastSeen: '1 year ago',
     avatar: 'P',
-    color: '#a78bfa',
+    color: '#8a6a2a',
     messages: [
       { from: 'them', text: 'we should all hang out again', time: '3:20 PM', read: true },
       { from: 'me', text: 'definitely. soon.', time: '3:22 PM', read: true },
@@ -40,7 +41,7 @@ const conversations = [
     name: 'Mom',
     lastSeen: '3 days ago',
     avatar: 'M',
-    color: '#fbbf24',
+    color: '#c9a84c',
     messages: [
       { from: 'them', text: 'beta, kha liya?', time: '7:00 PM', read: false },
       { from: 'them', text: 'reply karo', time: '9:30 PM', read: false },
@@ -52,86 +53,84 @@ function ChatBubble({ msg, delay }) {
   const isMine = msg.from === 'me'
   return (
     <motion.div
-      initial={{ opacity: 0, x: isMine ? 20 : -20, y: 8 }}
+      initial={{ opacity: 0, x: isMine ? 30 : -30, y: 10 }}
       animate={{ opacity: 1, x: 0, y: 0 }}
-      transition={{ delay, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className={`flex ${isMine ? 'justify-end' : 'justify-start'} mb-2`}
+      transition={{ delay, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      className={`flex ${isMine ? 'justify-end' : 'justify-start'} mb-3`}
     >
-      <div className={`max-w-[75%] px-4 py-2.5 relative ${isMine ? 'chat-bubble-sent' : 'chat-bubble-recv'}`}>
-        <p className="font-sans text-[13px] text-[rgba(220,230,255,0.8)] leading-relaxed">
+      <motion.div
+        whileHover={{ scale: 1.02 }}
+        className={`max-w-[75%] px-4 py-2.5 ${isMine ? 'chat-bubble-sent' : 'chat-bubble-recv'}`}
+      >
+        <p className="font-sans text-[13px] leading-relaxed" style={{ color: 'rgba(235,225,205,0.85)' }}>
           {msg.text}
         </p>
         <div className={`flex items-center gap-1.5 mt-1 ${isMine ? 'justify-end' : 'justify-start'}`}>
-          <span className="font-mono text-[9px] text-[rgba(120,150,200,0.4)]">{msg.time}</span>
+          <span className="font-mono text-[8px]" style={{ color: 'rgba(160,140,100,0.45)' }}>{msg.time}</span>
           {isMine && (
-            <span className={`font-mono text-[9px] ${msg.read ? 'text-[rgba(0,212,255,0.5)]' : 'text-[rgba(120,150,200,0.3)]'}`}>
+            <span className="font-mono text-[8px]" style={{ color: msg.read ? 'rgba(201,168,76,0.6)' : 'rgba(130,110,80,0.35)' }}>
               {msg.read ? '✓✓' : '✓'}
             </span>
           )}
         </div>
-      </div>
+      </motion.div>
     </motion.div>
   )
 }
 
 function TypingIndicator() {
   return (
-    <div className="flex items-center gap-1.5 px-4 py-3 chat-bubble-recv w-fit mb-4">
-      <div className="typing-dot w-1.5 h-1.5 rounded-full bg-[rgba(160,190,255,0.5)]" />
-      <div className="typing-dot w-1.5 h-1.5 rounded-full bg-[rgba(160,190,255,0.5)]" />
-      <div className="typing-dot w-1.5 h-1.5 rounded-full bg-[rgba(160,190,255,0.5)]" />
-    </div>
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 4 }}
+      className="flex items-center gap-1.5 px-4 py-3 chat-bubble-recv w-fit mb-3"
+    >
+      <div className="typing-dot w-1.5 h-1.5 rounded-full" style={{ background: 'rgba(201,168,76,0.5)' }} />
+      <div className="typing-dot w-1.5 h-1.5 rounded-full" style={{ background: 'rgba(201,168,76,0.5)' }} />
+      <div className="typing-dot w-1.5 h-1.5 rounded-full" style={{ background: 'rgba(201,168,76,0.5)' }} />
+    </motion.div>
   )
 }
 
-function ConversationCard({ conv, index, isActive, onClick }) {
+function ConversationCard({ conv, isActive, onClick }) {
   const unread = conv.messages.filter(m => !m.read && m.from === 'them').length
   const lastMsg = conv.messages[conv.messages.length - 1]
-
   return (
     <motion.div
       onClick={onClick}
-      whileHover={{ x: 4 }}
-      className={`flex items-center gap-4 px-4 py-3.5 cursor-pointer transition-all duration-300 border-l-2 ${
-        isActive
-          ? 'border-[rgba(0,212,255,0.5)] bg-[rgba(0,212,255,0.03)]'
-          : 'border-transparent hover:border-[rgba(0,212,255,0.15)] hover:bg-[rgba(255,255,255,0.02)]'
+      whileHover={{ x: 4, backgroundColor: 'rgba(201,168,76,0.03)' }}
+      whileTap={{ scale: 0.98 }}
+      className={`flex items-center gap-3 px-4 py-3.5 cursor-pointer transition-all duration-300 border-l-2 ${
+        isActive ? 'border-[rgba(155,35,53,0.6)]' : 'border-transparent'
       }`}
+      style={{ background: isActive ? 'rgba(155,35,53,0.05)' : 'transparent' }}
     >
       <div className="relative flex-shrink-0">
-        <div
+        <motion.div
+          whileHover={{ scale: 1.08 }}
           className="w-10 h-10 rounded-full flex items-center justify-center font-sans font-medium text-sm"
-          style={{
-            background: `rgba(${conv.color.slice(1).match(/.{2}/g).map(h => parseInt(h, 16)).join(',')}, 0.12)`,
-            border: `1px solid ${conv.color}30`,
-            color: conv.color,
-          }}
+          style={{ background: `${conv.color}20`, border: `1px solid ${conv.color}40`, color: conv.color }}
         >
           {conv.avatar}
-        </div>
+        </motion.div>
         {unread > 0 && (
-          <div className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-[rgba(0,212,255,0.8)] flex items-center justify-center">
-            <span className="font-mono text-[6px] text-void">{unread}</span>
-          </div>
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full flex items-center justify-center"
+            style={{ background: 'rgba(155,35,53,0.9)' }}
+          >
+            <span className="font-mono text-[6px]" style={{ color: 'rgba(245,240,232,0.9)' }}>{unread}</span>
+          </motion.div>
         )}
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between mb-0.5">
-          <span className="font-sans text-[13px] text-[rgba(220,230,255,0.7)] font-medium truncate">
-            {conv.name}
-          </span>
-          <span className="font-mono text-[8px] text-[rgba(100,130,180,0.4)] flex-shrink-0 ml-2">
-            last seen {conv.lastSeen}
-          </span>
+          <span className="font-sans text-[13px] font-medium truncate" style={{ color: 'rgba(235,225,205,0.75)' }}>{conv.name}</span>
+          <span className="font-mono text-[7px] flex-shrink-0 ml-2" style={{ color: 'rgba(150,130,90,0.4)' }}>last seen {conv.lastSeen}</span>
         </div>
-        <div className="flex items-center gap-1">
-          {lastMsg.from === 'me' && (
-            <span className="font-mono text-[8px] text-[rgba(100,140,200,0.4)]">you: </span>
-          )}
-          <span className="font-sans text-[11px] text-[rgba(120,150,200,0.45)] truncate">
-            {lastMsg.text}
-          </span>
-        </div>
+        <span className="font-sans text-[11px] truncate block" style={{ color: 'rgba(150,130,90,0.45)' }}>{lastMsg.text}</span>
       </div>
     </motion.div>
   )
@@ -141,68 +140,94 @@ export default function Scene2_Messages() {
   const { ref, isInView } = useInView()
   const [activeConv, setActiveConv] = useState(0)
   const [showTyping, setShowTyping] = useState(false)
-  const [faded, setFaded] = useState(false)
+  const headerRef = useRef(null)
 
   useEffect(() => {
     if (!isInView) return
     setShowTyping(false)
-    setFaded(false)
     const t = setTimeout(() => setShowTyping(true), 3000)
-    const t2 = setTimeout(() => setShowTyping(false), 6000)
+    const t2 = setTimeout(() => setShowTyping(false), 6500)
     return () => { clearTimeout(t); clearTimeout(t2) }
   }, [activeConv, isInView])
+
+  useEffect(() => {
+    if (!isInView || !headerRef.current) return
+    gsap.fromTo(headerRef.current, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' })
+  }, [isInView])
 
   const conv = conversations[activeConv]
 
   return (
     <section ref={ref} className="scene-section relative z-10 py-16">
-      <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 70% 70% at 50% 50%, rgba(5,5,20,0.97) 0%, transparent 100%)' }} />
+      <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 70% 70% at 50% 50%, rgba(13,13,26,0.97) 0%, transparent 100%)' }} />
       <div className="relative z-10 max-w-5xl mx-auto px-6 md:px-12">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 1 }} className="mb-12 text-center">
-          <div className="font-mono text-[9px] tracking-[0.5em] text-[rgba(0,212,255,0.3)] uppercase mb-4">chapter two</div>
-          <h2 className="font-serif text-3xl md:text-5xl text-[rgba(200,215,255,0.65)] italic mb-4">unread conversations</h2>
-          <p className="font-sans text-sm text-[rgba(120,150,200,0.45)] max-w-sm mx-auto leading-relaxed">
+        <div ref={headerRef} className="mb-12 text-center">
+          <div className="font-mono text-[8px] tracking-[0.5em] uppercase mb-4" style={{ color: 'rgba(155,35,53,0.45)' }}>chapter two</div>
+          <h2 className="font-serif text-3xl md:text-5xl italic mb-4" style={{ color: 'rgba(235,225,205,0.65)' }}>unread conversations</h2>
+          <p className="font-sans text-sm max-w-sm mx-auto leading-relaxed" style={{ color: 'rgba(160,140,100,0.45)' }}>
             "He still reads old chats like they are places he can return to."
           </p>
-        </motion.div>
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.3, duration: 1 }} className="glass-panel rounded-lg overflow-hidden" style={{ maxHeight: '520px', display: 'flex' }}>
-          <div className="w-72 flex-shrink-0 border-r border-[rgba(255,255,255,0.05)] flex flex-col">
-            <div className="px-4 py-3.5 border-b border-[rgba(255,255,255,0.04)]">
-              <div className="font-sans text-[11px] text-[rgba(120,150,200,0.4)] tracking-wider uppercase">Messages</div>
+        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.3, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="glass-panel rounded-lg overflow-hidden"
+          style={{ maxHeight: '520px', display: 'flex' }}
+        >
+          <div className="w-64 flex-shrink-0 flex flex-col" style={{ borderRight: '1px solid rgba(201,168,76,0.08)' }}>
+            <div className="px-4 py-3.5" style={{ borderBottom: '1px solid rgba(201,168,76,0.06)' }}>
+              <div className="font-sans text-[10px] tracking-wider uppercase" style={{ color: 'rgba(160,140,100,0.4)' }}>Messages</div>
             </div>
             <div className="flex-1 overflow-y-auto py-2">
               {conversations.map((c, i) => (
-                <ConversationCard key={i} conv={c} index={i} isActive={activeConv === i} onClick={() => setActiveConv(i)} />
+                <ConversationCard key={i} conv={c} isActive={activeConv === i} onClick={() => setActiveConv(i)} />
               ))}
             </div>
           </div>
           <div className="flex-1 flex flex-col min-w-0">
-            <div className="flex items-center gap-3 px-5 py-3.5 border-b border-[rgba(255,255,255,0.04)]">
-              <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-sans font-medium" style={{ background: `rgba(${conv.color.slice(1).match(/.{2}/g).map(h => parseInt(h, 16)).join(',')}, 0.12)`, color: conv.color }}>
-                {conv.avatar}
-              </div>
-              <div>
-                <div className="font-sans text-[13px] text-[rgba(200,220,255,0.7)]">{conv.name}</div>
-                <div className="font-mono text-[9px] text-[rgba(100,130,180,0.35)]">last seen {conv.lastSeen}</div>
-              </div>
-            </div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeConv}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="flex items-center gap-3 px-5 py-3.5"
+                style={{ borderBottom: '1px solid rgba(201,168,76,0.06)' }}
+              >
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium"
+                  style={{ background: `${conv.color}20`, color: conv.color }}>
+                  {conv.avatar}
+                </div>
+                <div>
+                  <div className="font-sans text-[13px]" style={{ color: 'rgba(235,225,205,0.75)' }}>{conv.name}</div>
+                  <div className="font-mono text-[8px]" style={{ color: 'rgba(150,130,90,0.4)' }}>last seen {conv.lastSeen}</div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
             <div className="flex-1 overflow-y-auto px-5 py-4">
               <AnimatePresence mode="wait">
-                <motion.div key={activeConv} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-                  {conv.messages.map((msg, i) => <ChatBubble key={i} msg={msg} delay={i * 0.15} />)}
-                  {showTyping && activeConv === 0 && <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}><TypingIndicator /></motion.div>}
+                <motion.div key={activeConv} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                  {conv.messages.map((msg, i) => <ChatBubble key={i} msg={msg} delay={i * 0.12} />)}
+                  <AnimatePresence>{showTyping && activeConv === 0 && <TypingIndicator />}</AnimatePresence>
                 </motion.div>
               </AnimatePresence>
             </div>
-            <div className="px-5 py-3 border-t border-[rgba(255,255,255,0.04)]">
-              <div className="flex items-center gap-3 px-4 py-2.5 rounded-full bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)]">
-                <span className="font-sans text-[12px] text-[rgba(80,100,140,0.3)] italic flex-1">type something...</span>
+            <div className="px-5 py-3" style={{ borderTop: '1px solid rgba(201,168,76,0.06)' }}>
+              <div className="flex items-center gap-3 px-4 py-2.5 rounded-full" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(201,168,76,0.08)' }}>
+                <span className="font-sans text-[12px] italic flex-1" style={{ color: 'rgba(130,110,80,0.35)' }}>type something...</span>
               </div>
             </div>
           </div>
         </motion.div>
-        <motion.div initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} transition={{ delay: 1.5, duration: 1.5 }} className="mt-12 text-center">
-          <p className="font-serif text-lg md:text-xl text-[rgba(160,185,230,0.5)] italic max-w-md mx-auto">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ delay: 1.5, duration: 1.5 }}
+          className="mt-14 text-center"
+        >
+          <p className="font-serif text-lg md:text-xl italic max-w-md mx-auto leading-relaxed" style={{ color: 'rgba(200,180,140,0.45)' }}>
             "Some conversations never truly end. They just stop getting replies."
           </p>
         </motion.div>
