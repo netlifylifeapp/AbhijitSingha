@@ -66,7 +66,7 @@ function ChatBubble({ msg, delay }) {
           {msg.text}
         </p>
         <div className={`flex items-center gap-1.5 mt-1 ${isMine ? 'justify-end' : 'justify-start'}`}>
-          <span className="font-mono text-[8px]" style={{ color: 'rgba(160,140,100,0.45)' }}>{msg.time}</span>
+          <span className="font-mono text-[8px]" style={{ color: 'rgba(190,170,130,0.75)' }}>{msg.time}</span>
           {isMine && (
             <span className="font-mono text-[8px]" style={{ color: msg.read ? 'rgba(201,168,76,0.6)' : 'rgba(130,110,80,0.35)' }}>
               {msg.read ? '✓✓' : '✓'}
@@ -163,8 +163,8 @@ export default function Scene2_Messages() {
       <div className="relative z-10 max-w-5xl mx-auto px-6 md:px-12">
         <div ref={headerRef} className="mb-12 text-center">
           <div className="font-mono text-[8px] tracking-[0.5em] uppercase mb-4" style={{ color: 'rgba(155,35,53,0.45)' }}>chapter two</div>
-          <h2 className="font-serif text-3xl md:text-5xl italic mb-4" style={{ color: 'rgba(235,225,205,0.65)' }}>unread conversations</h2>
-          <p className="font-sans text-sm max-w-sm mx-auto leading-relaxed" style={{ color: 'rgba(160,140,100,0.45)' }}>
+          <h2 className="font-serif text-3xl md:text-5xl italic mb-4" style={{ color: 'rgba(235,225,205,0.88)' }}>unread conversations</h2>
+          <p className="font-sans text-sm max-w-sm mx-auto leading-relaxed" style={{ color: 'rgba(190,170,130,0.75)' }}>
             "He still reads old chats like they are places he can return to."
           </p>
         </div>

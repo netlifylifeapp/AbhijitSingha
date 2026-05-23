@@ -28,7 +28,7 @@ function DiaryPage({ entry, isActive, onClick }) {
         <div className="font-mono text-[7px] px-2 py-0.5 rounded-full" style={{ background: `${moodColors[entry.mood]}20`, border: `1px solid ${moodColors[entry.mood]}`, color: moodColors[entry.mood] }}>{entry.mood}</div>
       </div>
       {isActive ? (
-        <p className="font-serif text-[13px] italic leading-relaxed" style={{ color: 'rgba(220,200,160,0.65)' }}>{entry.entry}</p>
+        <p className="font-serif text-[13px] italic leading-relaxed" style={{ color: 'rgba(220,200,160,0.88)' }}>{entry.entry}</p>
       ) : (
         <div className="space-y-1.5">
           {[80, 65, 70, 45].map((w, i) => (
@@ -93,8 +93,8 @@ export default function Scene6_Diary() {
       <div className="relative z-10 max-w-5xl mx-auto px-6 md:px-12">
         <div ref={titleRef} className="text-center mb-14">
           <div className="font-mono text-[8px] tracking-[0.5em] uppercase mb-4" style={{ color: 'rgba(201,168,76,0.4)' }}>chapter six</div>
-          <h2 className="font-serif text-3xl md:text-5xl italic mb-5" style={{ color: 'rgba(235,225,205,0.65)' }}>the abandoned diary</h2>
-          <p className="font-sans text-sm" style={{ color: 'rgba(160,140,100,0.45)' }}>"things he wrote but never sent."</p>
+          <h2 className="font-serif text-3xl md:text-5xl italic mb-5" style={{ color: 'rgba(235,225,205,0.88)' }}>the abandoned diary</h2>
+          <p className="font-sans text-sm" style={{ color: 'rgba(190,170,130,0.75)' }}>"things he wrote but never sent."</p>
         </div>
         <motion.div initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.3, duration: 1 }} className="grid grid-cols-1 md:grid-cols-5 gap-4">
           <div className="md:col-span-2 space-y-3">

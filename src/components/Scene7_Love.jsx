@@ -217,7 +217,7 @@ function ChapterCard({ item, index, isInView }) {
               <motion.div initial={{ height:0, opacity:0 }} animate={{ height:'auto', opacity:1 }} exit={{ height:0, opacity:0 }} transition={{ duration:0.5, ease:[0.16,1,0.3,1] }} className="overflow-hidden">
                 <div className="mx-5 mb-5 p-4 rounded-xl" style={{ background:'rgba(0,0,0,0.3)', borderLeft:`2px solid ${item.color}`, borderTop:'1px solid rgba(255,255,255,0.04)' }}>
                   <div className="font-serif text-3xl leading-none mb-2 opacity-20" style={{ color:item.color }}>"</div>
-                  <motion.p initial={{ opacity:0, y:8 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.15, duration:0.6 }} className="font-serif text-[13px] md:text-[14px] italic leading-relaxed" style={{ color:'rgba(160,190,240,0.65)' }}>{item.detail}</motion.p>
+                  <motion.p initial={{ opacity:0, y:8 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.15, duration:0.6 }} className="font-serif text-[13px] md:text-[14px] italic leading-relaxed" style={{ color:'rgba(160,190,240,0.88)' }}>{item.detail}</motion.p>
                 </div>
               </motion.div>
             )}

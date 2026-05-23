@@ -91,8 +91,8 @@ export default function Scene3_Friendships() {
       <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-12">
         <div ref={titleRef} className="text-center mb-14">
           <div className="font-mono text-[8px] tracking-[0.5em] uppercase mb-4" style={{ color: 'rgba(155,35,53,0.45)' }}>chapter three</div>
-          <h2 className="font-serif text-3xl md:text-5xl italic mb-5" style={{ color: 'rgba(235,225,205,0.65)' }}>fading friendships</h2>
-          <p className="font-sans text-sm max-w-xs mx-auto" style={{ color: 'rgba(160,140,100,0.45)' }}>
+          <h2 className="font-serif text-3xl md:text-5xl italic mb-5" style={{ color: 'rgba(235,225,205,0.88)' }}>fading friendships</h2>
+          <p className="font-sans text-sm max-w-xs mx-auto" style={{ color: 'rgba(190,170,130,0.75)' }}>
             "The people who were once his entire world slowly became usernames he no longer checked."
           </p>
         </div>
@@ -105,11 +105,11 @@ export default function Scene3_Friendships() {
         >
           <div className="flex items-center gap-2">
             <div className="w-8 h-px" style={{ background: 'rgba(201,168,76,0.6)' }} />
-            <span className="font-mono text-[8px]" style={{ color: 'rgba(160,140,100,0.45)' }}>present</span>
+            <span className="font-mono text-[8px]" style={{ color: 'rgba(190,170,130,0.75)' }}>present</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-8 h-px" style={{ background: 'rgba(160,140,100,0.2)' }} />
-            <span className="font-mono text-[8px]" style={{ color: 'rgba(160,140,100,0.45)' }}>lost</span>
+            <span className="font-mono text-[8px]" style={{ color: 'rgba(190,170,130,0.75)' }}>lost</span>
           </div>
         </motion.div>
 

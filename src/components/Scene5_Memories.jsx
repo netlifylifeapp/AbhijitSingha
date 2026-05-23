@@ -82,8 +82,8 @@ export default function Scene5_Memories() {
       <div className="relative z-10 max-w-5xl mx-auto px-6 md:px-12">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 1 }} className="text-center mb-10">
           <div className="font-mono text-[8px] tracking-[0.5em] uppercase mb-4" style={{ color: 'rgba(155,35,53,0.45)' }}>chapter five</div>
-          <h2 className="font-serif text-3xl md:text-5xl italic mb-5" style={{ color: 'rgba(235,225,205,0.65)' }}>collapsing memories</h2>
-          <p className="font-sans text-sm" style={{ color: 'rgba(160,140,100,0.45)' }}>fragments of what was. floating without weight.</p>
+          <h2 className="font-serif text-3xl md:text-5xl italic mb-5" style={{ color: 'rgba(235,225,205,0.88)' }}>collapsing memories</h2>
+          <p className="font-sans text-sm" style={{ color: 'rgba(190,170,130,0.75)' }}>fragments of what was. floating without weight.</p>
         </motion.div>
         <div className="relative w-full" style={{ height: '560px' }}>
           <motion.div
